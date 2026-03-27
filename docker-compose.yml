@@ -34,7 +34,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     networks:
       - chativot
     healthcheck:
@@ -57,7 +57,7 @@ services:
       - pgadmin_data:/var/lib/pgadmin
       - ./scripts/servers.json:/pgadmin4/servers.json:ro
     ports:
-      - "5050:80"
+      - "127.0.0.1:5050:80"
     networks:
       - chativot
     depends_on:
@@ -73,7 +73,7 @@ services:
     volumes:
       - redis_data:/data
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
     networks:
       - chativot
     healthcheck:
@@ -105,7 +105,7 @@ services:
     volumes:
       - chatwoot_storage:/app/storage
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     networks:
       - chativot
     depends_on:
@@ -167,7 +167,7 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
     ports:
-      - "5678:5678"
+      - "127.0.0.1:5678:5678"
     networks:
       - chativot
     depends_on:
@@ -198,7 +198,7 @@ services:
       - fzap_data:/app/dbdata
       - fzap_instances:/app/files
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"
     networks:
       - chativot
     depends_on:
@@ -220,7 +220,7 @@ services:
     volumes:
       - zabbix_server_data:/var/lib/zabbix
     ports:
-      - "10051:10051"
+      - "127.0.0.1:10051:10051"
     networks:
       - chativot
     depends_on:
@@ -240,7 +240,7 @@ services:
       ZBX_SERVER_HOST: zabbix-server
       PHP_TZ: ${ZABBIX_TZ}
     ports:
-      - "8081:8080"
+      - "127.0.0.1:8081:8080"
     networks:
       - chativot
     depends_on:
@@ -287,7 +287,7 @@ services:
     environment:
       RI_PROXY_PATH: /
     ports:
-      - "5540:5540"
+      - "127.0.0.1:5540:5540"
     networks:
       - chativot
     depends_on:
