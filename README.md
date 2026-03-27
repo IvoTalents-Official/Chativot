@@ -216,13 +216,13 @@ Todos los subdominios apuntan a `89.167.98.137` con proxy **desactivado** (nube 
 
 | Subdominio | IP |
 |---|---|
-| chatdev.chativot.com | 89.167.98.137 |
-| n8ndev.chativot.com | 89.167.98.137 |
-| fzapdev.chativot.com | 89.167.98.137 |
-| zabbixdev.chativot.com | 89.167.98.137 |
-| bddev.chativot.com | 89.167.98.137 |
-| redisdev.chativot.com | 89.167.98.137 |
-| dev.chativot.com | 89.167.98.137 |
+| chatdev.chativot.com 
+| n8ndev.chativot.com 
+| fzapdev.chativot.com 
+| zabbixdev.chativot.com 
+| bddev.chativot.com 
+| redisdev.chativot.com 
+| dev.chativot.com 
 
 ---
 
