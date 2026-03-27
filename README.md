@@ -212,7 +212,7 @@ bash 03_importar_en_dev.sh
 
 ## 🌍 DNS (Cloudflare)
 
-Todos los subdominios apuntan a `89.167.98.137` con proxy **desactivado** (nube gris).
+Todos los subdominios apuntan al servidor prod o dev con proxy **activado** (nube naranja).
 
 | Subdominio | IP |
 |---|---|
