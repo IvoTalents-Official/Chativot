@@ -9,7 +9,6 @@ Entorno de desarrollo completo basado en Docker para la plataforma **Chativot**,
 | Item | Detalle |
 |---|---|
 | OS | Ubuntu 24.04 LTS |
-| IP | 89.167.98.137 |
 | Docker | 29.3.0 |
 | Docker Compose | v5.1.0 |
 
