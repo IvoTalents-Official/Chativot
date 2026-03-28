@@ -1,7 +1,7 @@
 # 📦 `01_exportar_produccion.sh`
 
 **Ubicación:** `/root/01_exportar_produccion.sh`
-**Ejecutar en:** Servidor de **PRODUCCIÓN** (`32.193.7.26`) como `root`
+**Ejecutar en:** Servidor de **PRODUCCIÓN** (`IP-SERVIDOR-PROD`) como `root`
 
 ## ¿Qué hace?
 Exporta todo el stack en `/tmp/chativot_export`:
@@ -33,7 +33,7 @@ Tiempo estimado: **20-40 minutos**
 ## Siguiente paso
 ```bash
 # Transferir al servidor dev:
-scp -r root@32.193.7.26:/tmp/chativot_export/ /tmp/
+scp -r root@IP-SERVIDOR-PROD:/tmp/chativot_export/ /tmp/
 # Luego en dev importar con:
 bash 03_importar_en_dev.sh
 ```

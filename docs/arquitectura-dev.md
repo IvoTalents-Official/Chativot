@@ -3,7 +3,7 @@
 > **Version:** v2.0 — Post Hardening de Seguridad  
 > **Fecha:** 20 de marzo de 2026  
 > **Servidor:** Hetzner vServer — hostname: dev  
-> **IP publica:** 89.167.98.137  
+> **IP publica:** IP-SERVIDOR-DEV  
 
 ---
 
@@ -60,7 +60,7 @@ el 20 de marzo de 2026, equiparando el nivel de hardening con el servidor de pro
 | Kernel | 6.8.0-90-generic |
 | Uptime | up 2 days, 9 hours, 13 minutes |
 | Hostname | dev |
-| IP publica | 89.167.98.137 /32 en eth0 |
+| IP publica | IP-SERVIDOR-DEV /32 en eth0 |
 | Docker Engine | 29.3.0 (Community) |
 | Docker Compose | 5.1.0 |
 | Contenedores activos | 12 running |
@@ -152,7 +152,7 @@ el 20 de marzo de 2026, equiparando el nivel de hardening con el servidor de pro
 | Interfaz | IP / Subnet | MTU | Descripcion |
 |----------|-------------|-----|-------------|
 | lo | 127.0.0.1/8 | 65536 | Loopback |
-| eth0 | 89.167.98.137/32 (DHCP) | 1500 | NIC principal Hetzner — IP publica /32 |
+| eth0 | IP-SERVIDOR-DEV/32 (DHCP) | 1500 | NIC principal Hetzner — IP publica /32 |
 | docker0 | 172.17.0.1/16 | 1500 | Red Docker default (sin contenedores) |
 | br-08124a7b0933 | 172.18.0.1/16 | 1500 | Bridge chativot_chativot (stack activo) |
 | veth* (x11) | — | 1500 | Interfaces virtuales por contenedor |

@@ -1,7 +1,7 @@
 #!/bin/bash
 # ============================================================
 # SCRIPT 4: SINCRONIZAR DESARROLLO → PRODUCCIÓN
-# Ejecutar en: servidor DESARROLLO (89.167.98.137)
+# Ejecutar en: servidor DESARROLLO
 #
 # QUÉ SINCRONIZA (solo datos no críticos, sin pisar prod):
 #   ✅ n8n: workflows, credentials, tags, webhooks
@@ -14,7 +14,7 @@
 
 set -e
 
-PROD_IP="32.193.7.26"
+PROD_IP="IP-SERVIDOR-PROD" # Reemplazar con IP real
 PROD_USER="root"
 DEV_EXPORT="/tmp/dev_to_prod_export"
 
