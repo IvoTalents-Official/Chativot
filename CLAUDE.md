@@ -5,7 +5,7 @@
 **Proyecto:** Chativot - Sistema de Gestión de Relaciones con el Cliente (CRM) y Chat Centralizado  
 **Empresa:** ACM Four Company S.A. (Panamá)  
 **Repositorio:** `IvoTalents-Official/Chativot` (privado)  
-**Última actualización:** 2026-03-29
+**Última actualización:** 2026-03-30
 
 ---
 
@@ -235,14 +235,14 @@ git config user.email "andreina@ivotalents.com"
 
 ## ⚠️ Recordatorios Pendientes
 
-- [ ] Replicar configuración UFW en AWS Lightsail producción
-- [ ] Rodrigo: Configurar dominio + HTTPS para n8n Hetzner DEV
-- [ ] Rodrigo: Crear `variables-cliente.md` vía PR workflow
-- [ ] Rodrigo: Agregar headers de comentarios internos en scripts `guiones/`
+- [x] Replicar configuración UFW en AWS Lightsail producción
+- [x] Rodrigo: Configurar dominio + HTTPS para n8n Hetzner DEV
+- [x] Rodrigo: Crear `variables-cliente.md` No aplica: gestión de clientes es 100% vía GUI`
+- [x] Rodrigo: Agregar headers de comentarios internos en scripts `guiones/`
 - [ ] Andreina: Template de Change Management en Obsidian
-- [ ] Activar backups automáticos en Hetzner DEV
-- [ ] Remediar hallazgo C-01 (password compartido en 6 servicios)
+- [x] Activar backups automáticos en Hetzner DEV
+- [ ] Remediar hallazgo C-01 (password compartido en 6 servicios) - Pendiente 
 
 ---
 
-**Última revisión:** 2026-03-29 por Andreina Marrón
+**Última revisión:** 2026-03-30 por Andreina Marrón
