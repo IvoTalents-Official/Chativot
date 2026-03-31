@@ -237,7 +237,7 @@ git config user.email "andreina@ivotalents.com"
 
 - [x] Replicar configuración UFW en AWS Lightsail producción
 - [x] Rodrigo: Configurar dominio + HTTPS para n8n Hetzner DEV
-- [x] Rodrigo: Crear `variables-cliente.md` vía PR workflow
+- [x] Rodrigo: Crear `variables-cliente.md` No aplica: gestión de clientes es 100% vía GUI`
 - [x] Rodrigo: Agregar headers de comentarios internos en scripts `guiones/`
 - [ ] Andreina: Template de Change Management en Obsidian
 - [x] Activar backups automáticos en Hetzner DEV
@@ -245,4 +245,4 @@ git config user.email "andreina@ivotalents.com"
 
 ---
 
-**Última revisión:** 2026-03-29 por Andreina Marrón
+**Última revisión:** 2026-03-30 por Andreina Marrón
