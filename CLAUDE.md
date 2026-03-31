@@ -235,13 +235,13 @@ git config user.email "andreina@ivotalents.com"
 
 ## ⚠️ Recordatorios Pendientes
 
-- [ ] Replicar configuración UFW en AWS Lightsail producción
-- [ ] Rodrigo: Configurar dominio + HTTPS para n8n Hetzner DEV
-- [ ] Rodrigo: Crear `variables-cliente.md` vía PR workflow
-- [ ] Rodrigo: Agregar headers de comentarios internos en scripts `guiones/`
+- [x] Replicar configuración UFW en AWS Lightsail producción
+- [x] Rodrigo: Configurar dominio + HTTPS para n8n Hetzner DEV
+- [x] Rodrigo: Crear `variables-cliente.md` vía PR workflow
+- [x] Rodrigo: Agregar headers de comentarios internos en scripts `guiones/`
 - [ ] Andreina: Template de Change Management en Obsidian
-- [ ] Activar backups automáticos en Hetzner DEV
-- [ ] Remediar hallazgo C-01 (password compartido en 6 servicios)
+- [x] Activar backups automáticos en Hetzner DEV
+- [ ] Remediar hallazgo C-01 (password compartido en 6 servicios) - Pendiente 
 
 ---
 
