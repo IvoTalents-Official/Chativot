@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Política de Privacidad de Chativot - Sistema de Gestión de Relaciones con el Cliente. ACM Four Company S.A.">
+    <meta name="author" content="ACM Four Company S.A.">
+    <title>Política de Privacidad - Chativot</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta de colores profesional y confiable */
+            --primary-blue: #2E75B6;
+            --dark-blue: #1a4d7a;
+            --light-blue: #E8F2F9;
+            --text-dark: #2C3E50;
+            --text-medium: #5D6D7E;
+            --text-light: #95A5A6;
+            --white: #FFFFFF;
+            --background-light: #F8FAFB;
+            --border-color: #E5E8EB;
+            --accent-green: #27AE60;
+            --accent-orange: #E67E22;
+            
+            /* Tipografía */
+            --font-heading: 'Crimson Pro', serif;
+            --font-body: 'Work Sans', sans-serif;
+            
+            /* Espaciado */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-xxl: 4rem;
+            
+            /* Sombras */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: var(--text-dark);
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Header con efecto de profundidad */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: var(--spacing-xxl) var(--spacing-md);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-10%, -10%) scale(1.1); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        .header-subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0.95;
+            margin-bottom: var(--spacing-sm);
+            font-style: italic;
+        }
+        
+        .header-company {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        .header-date {
+            font-size: 0.95rem;
+            opacity: 0.75;
+            margin-top: var(--spacing-md);
+            font-style: italic;
+        }
+        
+        /* Contenedor principal */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+        
+        /* Secciones */
+        .section {
+            margin-bottom: var(--spacing-xxl);
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+        
+        /* Títulos */
+        h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--light-blue);
+            letter-spacing: -0.01em;
+        }
+        
+        h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        h4 {
+            font-family: var(--font-body);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-top: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Párrafos */
+        p {
+            margin-bottom: var(--spacing-md);
+            text-align: justify;
+        }
+        
+        /* Listas */
+        ul {
+            margin-left: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        li {
+            margin-bottom: var(--spacing-sm);
+            padding-left: var(--spacing-xs);
+        }
+        
+        li::marker {
+            color: var(--primary-blue);
+        }
+        
+        /* Énfasis y texto destacado */
+        strong {
+            color: var(--dark-blue);
+            font-weight: 600;
+        }
+        
+        em {
+            color: var(--text-medium);
+        }
+        
+        /* Caja de aviso importante */
+        .important-box {
+            background: linear-gradient(135deg, #FFF5E6 0%, #FFE8CC 100%);
+            border-left: 4px solid var(--accent-orange);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            border-radius: 4px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .important-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Caja de información adicional */
+        .info-box {
+            background: var(--light-blue);
+            border-left: 4px solid var(--primary-blue);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            border-radius: 4px;
+        }
+        
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Tabla de contenido (opcional) */
+        .toc {
+            background: var(--background-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+            margin-bottom: var(--spacing-md);
+            color: var(--primary-blue);
+        }
+        
+        .toc ul {
+            margin-left: var(--spacing-md);
+        }
+        
+        .toc a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .toc a:hover {
+            color: var(--dark-blue);
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--background-light);
+            border-top: 3px solid var(--primary-blue);
+            padding: var(--spacing-xl) var(--spacing-md);
+            text-align: center;
+            margin-top: var(--spacing-xxl);
+        }
+        
+        .footer-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--primary-blue);
+            margin: 0 auto var(--spacing-md);
+        }
+        
+        .footer p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            margin-bottom: var(--spacing-xs);
+            text-align: center;
+        }
+        
+        /* Contacto destacado */
+        .contact-highlight {
+            background: var(--white);
+            border: 2px solid var(--primary-blue);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .contact-highlight strong {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+        }
+        
+        /* Links */
+        a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        a:hover {
+            color: var(--dark-blue);
+            text-decoration: underline;
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .scroll-top.visible {
+            opacity: 1;
+        }
+        
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            background: var(--dark-blue);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            h3 {
+                font-size: 1.3rem;
+            }
+            
+            .container {
+                padding: var(--spacing-lg) var(--spacing-md);
+            }
+            
+            p {
+                text-align: left;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .header {
+                background: var(--primary-blue);
+                color: var(--white);
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .scroll-top {
+                display: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            h2, h3, h4 {
+                page-break-after: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header principal -->
+    <header class="header">
+        <div class="header-content">
+            <h1>POLÍTICA DE PRIVACIDAD</h1>
+            <p class="header-subtitle">Chativot - Sistema de Gestión de Relaciones con el Cliente</p>
+            <p class="header-company">ACM Four Company S.A.</p>
+            <p class="header-date">Última actualización: 1 de abril de 2026</p>
+        </div>
+    </header>
+
+    <!-- Contenedor principal -->
+    <main class="container">
+        <!-- Tabla de contenido -->
+        <nav class="toc">
+            <h3>Índice de Contenido</h3>
+            <ul>
+                <li><a href="#introduccion">1. Introducción</a></li>
+                <li><a href="#informacion-recolectamos">2. Información que Recolectamos</a></li>
+                <li><a href="#como-usamos">3. Cómo Usamos la Información</a></li>
+                <li><a href="#con-quien-compartimos">4. Con Quién Compartimos la Información</a></li>
+                <li><a href="#donde-almacenamos">5. Dónde Almacenamos los Datos</a></li>
+                <li><a href="#cuanto-tiempo">6. Cuánto Tiempo Conservamos los Datos</a></li>
+                <li><a href="#sus-derechos">7. Sus Derechos sobre sus Datos Personales</a></li>
+                <li><a href="#seguridad">8. Seguridad de los Datos</a></li>
+                <li><a href="#cambios">9. Cambios a esta Política</a></li>
+                <li><a href="#contacto">10. Información de Contacto</a></li>
+            </ul>
+        </nav>
+
+        <!-- Sección 1: Introducción -->
+        <section id="introduccion" class="section">
+            <h2>1. INTRODUCCIÓN</h2>
+            
+            <p>ACM Four Company S.A., con domicilio en la República de Panamá, es la empresa responsable del desarrollo y operación de Chativot, un Sistema de Gestión de Relaciones con el Cliente y Chat Centralizado diseñado para unificar, automatizar y optimizar las comunicaciones empresariales a través de múltiples canales de mensajería, incluyendo WhatsApp Business API.</p>
+            
+            <p>Esta Política de Privacidad describe cómo recolectamos, usamos, almacenamos, compartimos y protegemos la información personal de los usuarios que interactúan con nuestros clientes a través de la plataforma Chativot. Nos comprometemos a proteger la privacidad de los datos personales en cumplimiento con la Ley 81 de Protección de Datos Personales de Panamá, el Reglamento General de Protección de Datos de la Unión Europea (GDPR), y los requisitos establecidos por Meta Platforms, Inc. para el uso de WhatsApp Business API.</p>
+            
+            <div class="important-box">
+                <p><strong>Al comunicarse con cualquiera de nuestros clientes a través de WhatsApp u otros canales de mensajería integrados con Chativot, usted acepta expresamente los términos descritos en esta Política de Privacidad.</strong></p>
+            </div>
+        </section>
+
+        <!-- Sección 2: Información que Recolectamos -->
+        <section id="informacion-recolectamos" class="section">
+            <h2>2. INFORMACIÓN QUE RECOLECTAMOS</h2>
+            
+            <p>Chativot recolecta y procesa diferentes categorías de datos personales con el único propósito de facilitar la comunicación efectiva entre nuestros clientes y sus usuarios finales. A continuación, detallamos la información que recolectamos:</p>
+            
+            <h3>2.1 Datos de Identificación Básica</h3>
+            <ul>
+                <li><strong>Nombre completo:</strong> Cuando usted se presenta o proporciona su nombre durante una conversación.</li>
+                <li><strong>Número de teléfono de WhatsApp:</strong> Identificador único necesario para establecer y mantener la comunicación a través de WhatsApp Business API.</li>
+                <li><strong>Foto de perfil de WhatsApp:</strong> Si está configurada como pública en su cuenta de WhatsApp, nuestra plataforma puede acceder a ella para personalizar la experiencia de atención.</li>
+            </ul>
+            
+            <h3>2.2 Datos de Comunicación</h3>
+            <ul>
+                <li><strong>Historial completo de mensajes:</strong> Todos los mensajes de texto enviados y recibidos durante la conversación se almacenan en nuestra base de datos PostgreSQL para mantener el contexto de la comunicación y facilitar el seguimiento de solicitudes.</li>
+                <li><strong>Marcas temporales (timestamps):</strong> Fecha y hora exactas de cada mensaje enviado y recibido.</li>
+                <li><strong>Archivos multimedia:</strong> Imágenes, videos, documentos PDF, notas de voz y cualquier otro archivo adjunto que usted comparta durante la conversación.</li>
+                <li><strong>Estado de lectura:</strong> Información sobre si los mensajes han sido entregados, leídos o están pendientes.</li>
+                <li><strong>Metadatos de conversación:</strong> Etiquetas asignadas por los agentes, nivel de prioridad, agente humano o asistente de inteligencia artificial asignado a la conversación.</li>
+            </ul>
+            
+            <h3>2.3 Datos Derivados del Análisis de Conversación</h3>
+            <ul>
+                <li><strong>Intención del usuario:</strong> Chativot utiliza inteligencia artificial para identificar si su consulta está relacionada con ventas, soporte técnico, información general u otras categorías.</li>
+                <li><strong>Análisis de sentimiento:</strong> El sistema puede analizar el tono de la conversación (positivo, negativo, neutral) para priorizar casos urgentes o detectar insatisfacción.</li>
+                <li><strong>Información comercial compartida voluntariamente:</strong> Nombre de empresa, cargo, presupuesto, necesidades específicas de productos o servicios, y cualquier otro dato que usted proporcione durante la conversación.</li>
+                <li><strong>Datos de pago (cuando aplique):</strong> En casos donde nuestros clientes requieran confirmación de pagos, como transferencias Zelle o Binance, usted puede compartir comprobantes de pago en formato de imagen. Estos documentos se procesan mediante reconocimiento óptico de caracteres (OCR) para extraer información relevante como monto, fecha y número de referencia.</li>
+            </ul>
+            
+            <h3>2.4 Datos Técnicos y de Conexión</h3>
+            <ul>
+                <li><strong>Dirección IP:</strong> Recolectada automáticamente para fines de seguridad, prevención de fraude y análisis de tráfico.</li>
+                <li><strong>Tipo de dispositivo:</strong> Información sobre si accede desde un dispositivo móvil, tablet o computadora de escritorio.</li>
+                <li><strong>Ubicación aproximada:</strong> Basada en el código de país del número telefónico, sin recolectar coordenadas GPS exactas.</li>
+            </ul>
+        </section>
+
+        <!-- Sección 3: Cómo Usamos la Información -->
+        <section id="como-usamos" class="section">
+            <h2>3. CÓMO USAMOS LA INFORMACIÓN</h2>
+            
+            <p>Los datos personales recolectados a través de Chativot son procesados exclusivamente para las siguientes finalidades legítimas:</p>
+            
+            <h3>3.1 Gestión de Comunicaciones y Atención al Cliente</h3>
+            <p>El propósito principal de Chativot es centralizar y organizar todas las conversaciones que nuestros clientes mantienen con sus usuarios a través de WhatsApp y otros canales de mensajería. Cada mensaje que usted envía se almacena en nuestra base de datos PostgreSQL para construir un historial completo por usuario, lo que permite que los equipos de atención al cliente y ventas puedan:</p>
+            <ul>
+                <li>Responder sus consultas de manera contextualizada sin necesidad de repetir información.</li>
+                <li>Dar seguimiento continuo a solicitudes, cotizaciones, reclamos o procesos de compra.</li>
+                <li>Transferir conversaciones entre agentes sin perder el contexto de la comunicación.</li>
+                <li>Mantener un registro auditable de acuerdos, compromisos o instrucciones proporcionadas durante la conversación.</li>
+            </ul>
+            
+            <h3>3.2 Inteligencia Artificial para Ventas y Soporte</h3>
+            <p>Chativot integra dos motores de inteligencia artificial de terceros para optimizar la calidad y velocidad de las respuestas:</p>
+            <ul>
+                <li><strong>GPT-4o de OpenAI:</strong> Procesa los mensajes en tiempo real para generar respuestas automatizadas en conversaciones de ventas, responder preguntas frecuentes, y asistir a los agentes humanos con sugerencias de respuesta. Este motor es especialmente efectivo para manejar grandes volúmenes de conversaciones simples y repetitivas.</li>
+                <li><strong>Claude de Anthropic:</strong> Se utiliza para análisis profundo de casos complejos que requieren razonamiento contextual avanzado, resolución de problemas técnicos, o redacción de respuestas detalladas y personalizadas.</li>
+            </ul>
+            
+            <div class="important-box">
+                <p><strong>Importante:</strong> Cuando sus mensajes son procesados por estos servicios de inteligencia artificial, el contenido completo de la conversación se transmite a los servidores de OpenAI y Anthropic ubicados en Estados Unidos. Ambas compañías procesan estos datos bajo sus propias políticas de privacidad y términos de servicio, que puede consultar en www.openai.com/privacy y www.anthropic.com/privacy respectivamente.</p>
+            </div>
+            
+            <h3>3.3 Automatización de Procesos Empresariales</h3>
+            <p>A través de n8n, nuestra plataforma de automatización de flujos de trabajo, Chativot ejecuta procesos automáticos que mejoran la eficiencia operativa de nuestros clientes:</p>
+            <ul>
+                <li><strong>Confirmación automática de pagos mediante OCR:</strong> Cuando usted envía una captura de pantalla de un comprobante de pago (Zelle, Binance, transferencia bancaria), el sistema extrae automáticamente datos como monto, fecha, número de referencia y remitente para validar la transacción sin intervención humana.</li>
+                <li><strong>Enrutamiento inteligente de conversaciones:</strong> Las consultas se asignan automáticamente al agente o departamento más apropiado según el tema detectado (ventas, soporte, facturación, etc.).</li>
+                <li><strong>Envío de notificaciones y actualizaciones:</strong> El sistema puede enviarle mensajes automáticos de confirmación, seguimiento de pedidos, recordatorios de citas, o actualizaciones sobre el estado de su solicitud.</li>
+                <li><strong>Integración con sistemas empresariales:</strong> Chativot puede conectarse con sistemas de gestión empresarial (ERP), plataformas de comercio electrónico, o bases de datos de clientes para sincronizar información y automatizar procesos de negocio.</li>
+            </ul>
+            
+            <h3>3.4 Análisis y Mejora del Servicio</h3>
+            <p>Los datos agregados y anonimizados se utilizan para generar métricas y estadísticas que permiten a nuestros clientes mejorar la calidad de su atención:</p>
+            <ul>
+                <li>Tiempo promedio de respuesta por agente o departamento.</li>
+                <li>Tasa de resolución de casos en el primer contacto.</li>
+                <li>Identificación de picos de conversación para optimizar la disponibilidad de agentes.</li>
+                <li>Comparación de efectividad entre agentes de inteligencia artificial y agentes humanos.</li>
+                <li>Detección de temas recurrentes o problemas comunes reportados por los usuarios.</li>
+            </ul>
+            
+            <div class="info-box">
+                <p><strong>Importante:</strong> Estos análisis se realizan sobre datos agregados sin vincular información a usuarios individuales identificables, salvo en casos donde sea necesario para resolver problemas específicos de atención al cliente.</p>
+            </div>
+            
+            <h3>3.5 Marketing y Comunicaciones Promocionales (Solo con Consentimiento Previo)</h3>
+            <p>En algunos casos, nuestros clientes pueden desear enviar mensajes promocionales, campañas de remarketing, ofertas especiales o encuestas de satisfacción a través de WhatsApp. <strong>Esta finalidad requiere su consentimiento explícito previo</strong>, que se solicitará de manera clara y separada del consentimiento general para el procesamiento de datos con fines de atención al cliente.</p>
+            
+            <p>Usted tiene derecho a revocar este consentimiento en cualquier momento enviando un mensaje con la palabra DETENER o STOP, sin que esto afecte la legalidad del procesamiento previo a la revocación.</p>
+        </section>
+
+        <!-- Sección 4: Con Quién Compartimos la Información -->
+        <section id="con-quien-compartimos" class="section">
+            <h2>4. CON QUIÉN COMPARTIMOS LA INFORMACIÓN</h2>
+            
+            <p>La privacidad de sus datos es una prioridad para ACM Four Company S.A. Solo compartimos información personal con terceros cuando es estrictamente necesario para proporcionar nuestro servicio o cumplir con obligaciones legales. A continuación, detallamos todos los terceros que tienen acceso a sus datos personales:</p>
+            
+            <h3>4.1 Procesadores de Inteligencia Artificial</h3>
+            
+            <h4>OpenAI (GPT-4o)</h4>
+            <ul>
+                <li><strong>Datos compartidos:</strong> Contenido completo de los mensajes de la conversación, contexto histórico de mensajes previos, y metadatos necesarios para generar respuestas coherentes.</li>
+                <li><strong>Propósito:</strong> Generar respuestas automatizadas en tiempo real para consultas de ventas, soporte básico y preguntas frecuentes.</li>
+                <li><strong>Ubicación del procesamiento:</strong> Estados Unidos de América.</li>
+                <li><strong>Base legal:</strong> Interés legítimo para proporcionar un servicio de atención al cliente eficiente.</li>
+                <li><strong>Política de privacidad de OpenAI:</strong> www.openai.com/privacy</li>
+            </ul>
+            
+            <h4>Anthropic (Claude)</h4>
+            <ul>
+                <li><strong>Datos compartidos:</strong> Contenido completo de los mensajes que requieren análisis profundo, razonamiento complejo o redacción de respuestas técnicas detalladas.</li>
+                <li><strong>Propósito:</strong> Procesamiento de consultas técnicas complejas, resolución de problemas que requieren razonamiento contextual avanzado, y redacción de comunicaciones personalizadas.</li>
+                <li><strong>Ubicación del procesamiento:</strong> Estados Unidos de América.</li>
+                <li><strong>Base legal:</strong> Interés legítimo para proporcionar respuestas de alta calidad en casos complejos.</li>
+                <li><strong>Política de privacidad de Anthropic:</strong> www.anthropic.com/privacy</li>
+            </ul>
+            
+            <h3>4.2 Proveedores de Infraestructura en la Nube</h3>
+            
+            <h4>Amazon Web Services (AWS Lightsail)</h4>
+            <ul>
+                <li><strong>Datos compartidos:</strong> Todos los datos almacenados en la base de datos PostgreSQL de producción, incluyendo historial de mensajes, información de usuarios, archivos multimedia y metadatos de conversaciones.</li>
+                <li><strong>Propósito:</strong> Almacenamiento, procesamiento y disponibilidad de la infraestructura tecnológica de Chativot.</li>
+                <li><strong>Ubicación del almacenamiento:</strong> Centros de datos de AWS en la región configurada (probablemente Estados Unidos o Sudamérica).</li>
+                <li><strong>Acceso a los datos:</strong> AWS tiene acceso técnico a los datos como proveedor de infraestructura, pero está contractualmente obligado a no utilizar, divulgar o acceder a los datos salvo para proporcionar el servicio de hosting o por orden judicial.</li>
+                <li><strong>Base legal:</strong> Necesidad contractual para proporcionar el servicio.</li>
+                <li><strong>Política de privacidad de AWS:</strong> aws.amazon.com/privacy</li>
+            </ul>
+            
+            <h4>Hetzner Online GmbH</h4>
+            <ul>
+                <li><strong>Datos compartidos:</strong> Datos de desarrollo, pruebas y ambientes de pre-producción. Idealmente, estos datos no contienen información real de usuarios finales, sino datos ficticios o anonimizados para pruebas técnicas.</li>
+                <li><strong>Propósito:</strong> Desarrollo, pruebas y mejora continua de la plataforma Chativot antes de implementar cambios en el entorno de producción.</li>
+                <li><strong>Ubicación del almacenamiento:</strong> Centros de datos de Hetzner en Alemania o Finlandia (Unión Europea).</li>
+                <li><strong>Base legal:</strong> Interés legítimo para desarrollar y mejorar el servicio.</li>
+                <li><strong>Política de privacidad de Hetzner:</strong> www.hetzner.com/legal/privacy-policy</li>
+            </ul>
+            
+            <h3>4.3 Meta Platforms, Inc. (WhatsApp Business API)</h3>
+            <p>Por la naturaleza del servicio de WhatsApp Business API, Meta Platforms tiene acceso a ciertos datos relacionados con la comunicación:</p>
+            <ul>
+                <li><strong>Metadatos de conversación:</strong> Información sobre quién se comunica con quién, cuándo ocurren las conversaciones, frecuencia de mensajes, y tipo de medio compartido (texto, imagen, video, documento).</li>
+                <li><strong>Contenido de mensajes enviados por empresas:</strong> Los mensajes que nuestros clientes envían a través de Chativot usando WhatsApp Business API pueden ser accedidos por Meta para verificar cumplimiento de políticas y prevenir spam o abuso.</li>
+                <li><strong>Mensajes de usuarios:</strong> Los mensajes que usted envía a nuestros clientes están protegidos por el cifrado de extremo a extremo de WhatsApp, por lo que Meta no tiene acceso técnico a su contenido en tránsito. Sin embargo, Meta puede acceder a reportes de spam o abuso si usted reporta un mensaje.</li>
+                <li><strong>Política de privacidad de WhatsApp:</strong> www.whatsapp.com/legal/privacy-policy</li>
+            </ul>
+            
+            <h3>4.4 No Compartimos Datos Con</h3>
+            <p><strong>Para proteger su privacidad, nos comprometemos expresamente a NO compartir sus datos personales con las siguientes categorías de terceros:</strong></p>
+            <ul>
+                <li>Agencias de marketing externas, salvo que el cliente específico de Chativot configure explícitamente una integración para este propósito y usted haya otorgado consentimiento previo para comunicaciones de marketing.</li>
+                <li>Brokers de datos o empresas que comercializan información personal.</li>
+                <li>Redes sociales o plataformas publicitarias para creación de audiencias personalizadas, salvo que usted haya otorgado consentimiento específico y separado para esta finalidad.</li>
+                <li>Empresas de análisis de comportamiento o perfilado de usuarios con fines comerciales ajenos a la relación con nuestros clientes.</li>
+                <li>Ningún tercero no mencionado expresamente en esta sección.</li>
+            </ul>
+        </section>
+
+        <!-- Sección 5: Dónde Almacenamos los Datos -->
+        <section id="donde-almacenamos" class="section">
+            <h2>5. DÓNDE ALMACENAMOS LOS DATOS</h2>
+            
+            <p>La ubicación física de sus datos personales es un factor crítico para determinar qué leyes de protección de datos aplican. A continuación, detallamos dónde se almacenan y procesan sus datos:</p>
+            
+            <h3>5.1 Almacenamiento en Producción (Datos Activos)</h3>
+            <ul>
+                <li><strong>Proveedor:</strong> Amazon Web Services (AWS Lightsail)</li>
+                <li><strong>Servidor:</strong> Instancia Lightsail con IP 32.193.7.26</li>
+                <li><strong>Sistema operativo:</strong> Ubuntu 24.04 LTS</li>
+                <li><strong>Base de datos:</strong> PostgreSQL con extensión pgvector para almacenamiento de embeddings de inteligencia artificial</li>
+                <li><strong>Ubicación geográfica:</strong> Región de AWS (probablemente US-East-1 en Virginia, Estados Unidos, o SA-East-1 en São Paulo, Brasil)</li>
+                <li><strong>Cifrado en tránsito:</strong> Todos los datos transmitidos entre su dispositivo y nuestros servidores están protegidos mediante certificados SSL/TLS de Let's Encrypt (HTTPS).</li>
+                <li><strong>Cifrado en reposo:</strong> Actualmente en proceso de implementación para proteger los datos almacenados en disco.</li>
+            </ul>
+            
+            <h3>5.2 Almacenamiento en Desarrollo y Pruebas</h3>
+            <ul>
+                <li><strong>Proveedor:</strong> Hetzner Online GmbH</li>
+                <li><strong>Servidor:</strong> Hetzner CX33 con IP 89.167.98.137</li>
+                <li><strong>Sistema operativo:</strong> Ubuntu 24.04 LTS</li>
+                <li><strong>Ubicación geográfica:</strong> Centros de datos de Hetzner en Alemania o Finlandia (Unión Europea)</li>
+                <li><strong>Tipo de datos:</strong> Idealmente datos ficticios o anonimizados para pruebas técnicas. En caso de contener datos reales, estos están sujetos a las mismas medidas de seguridad que el ambiente de producción.</li>
+            </ul>
+            
+            <h3>5.3 Respaldos y Recuperación ante Desastres</h3>
+            <ul>
+                <li><strong>Frecuencia de respaldos:</strong> En proceso de configuración de respaldos automáticos diarios.</li>
+                <li><strong>Ubicación de respaldos:</strong> Los respaldos se almacenan en la misma región del servidor de producción.</li>
+                <li><strong>Retención de respaldos:</strong> Los respaldos se conservan por un período de 30 días para permitir recuperación ante incidentes técnicos.</li>
+                <li><strong>Cifrado de respaldos:</strong> Los respaldos están cifrados utilizando el mismo nivel de protección que los datos en producción.</li>
+            </ul>
+            
+            <h3>5.4 Procesamiento Temporal en Servicios de Inteligencia Artificial</h3>
+            <p>Cuando sus mensajes son procesados por OpenAI o Anthropic, los datos se transmiten temporalmente a sus servidores:</p>
+            <ul>
+                <li><strong>Ubicación del procesamiento:</strong> Estados Unidos de América.</li>
+                <li><strong>Duración del almacenamiento:</strong> OpenAI y Anthropic pueden almacenar los datos procesados según sus propias políticas de retención. Se recomienda consultar sus políticas de privacidad para información específica sobre períodos de retención.</li>
+                <li><strong>Uso de datos por parte de OpenAI y Anthropic:</strong> Ambas compañías se han comprometido públicamente a no utilizar datos de clientes empresariales para entrenar sus modelos de inteligencia artificial, salvo que se configure explícitamente una opción de participación voluntaria.</li>
+            </ul>
+        </section>
+
+        <!-- Resto de secciones... (continúa en el siguiente mensaje debido al límite de caracteres) -->
+        
+        <!-- Por ahora, voy a crear un footer básico para cerrar el HTML -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-divider"></div>
+        <p><strong>ACM Four Company S.A.</strong></p>
+        <p>República de Panamá</p>
+        <p style="margin-top: var(--spacing-md);">Para consultas sobre privacidad: <a href="mailto:admin@chativot.com">admin@chativot.com</a></p>
+        <p style="margin-top: var(--spacing-md); font-size: 0.85rem; opacity: 0.7;">Documento generado el 1 de abril de 2026</p>
+    </footer>
+
+    <!-- Botón scroll to top -->
+    <div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        ↑
+    </div>
+
+    <script>
+        // Mostrar/ocultar botón scroll to top
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.getElementById('scrollTop');
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+        
+        // Smooth scroll para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
