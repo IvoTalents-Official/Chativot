@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatIvot — AI Agent Chat</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ── Brand palette extraída del logo ── */
+    --bg:       #06080F;
+    --bg2:      #0A0D1A;
+    --bg3:      #0F1222;
+    --cyan:     #4FC3F7;   /* azul cielo del logo */
+    --blue:     #3A6EFF;   /* azul medio */
+    --indigo:   #5B4BD9;   /* índigo/púrpura del logo */
+    --grad:     linear-gradient(135deg, #4FC3F7 0%, #3A6EFF 50%, #5B4BD9 100%);
+    --grad-soft:linear-gradient(135deg, rgba(79,195,247,0.15) 0%, rgba(91,75,217,0.15) 100%);
+    --text:     #EEF2FF;
+    --muted:    #636B8A;
+    --border:   rgba(79,195,247,0.1);
+    --card:     rgba(79,195,247,0.03);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.5;
+  }
+
+  /* ── Ambient glow background ── */
+  .glow-top {
+    position: fixed;
+    width: 800px; height: 500px;
+    background: radial-gradient(ellipse, rgba(58,110,255,0.12) 0%, transparent 70%);
+    top: -100px; left: 50%; transform: translateX(-50%);
+    pointer-events: none; z-index: 0;
+  }
+  .glow-left {
+    position: fixed;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(79,195,247,0.07) 0%, transparent 70%);
+    top: 40%; left: -100px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px;
+    background: rgba(6,8,15,0.75);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  /* SVG logo mark inline */
+  .logo-mark {
+    width: 34px; height: 34px;
+    background: var(--grad);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 4px 20px rgba(58,110,255,0.35);
+  }
+
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 20px; letter-spacing: -0.5px;
+  }
+
+  .logo-text .grad-text {
+    background: var(--grad);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-sub {
+    font-size: 9px; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--muted); margin-top: -2px; font-weight: 400;
+  }
+
+  .nav-links { display: flex; gap: 34px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 14px;
+    font-weight: 400; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--grad);
+    color: #fff; padding: 10px 22px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(58,110,255,0.3);
+  }
+  .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 30px rgba(58,110,255,0.45); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center;
+    padding: 140px 40px 80px; overflow: hidden; z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(79,195,247,0.07);
+    border: 1px solid rgba(79,195,247,0.2);
+    border-radius: 100px; padding: 6px 18px;
+    font-size: 11px; font-weight: 500; color: var(--cyan);
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s ease both;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  .hero-badge .dot-pulse {
+    width: 6px; height: 6px; background: var(--cyan);
+    border-radius: 50%; animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:0.3; transform:scale(0.7); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(46px, 6.5vw, 84px);
+    font-weight: 800; line-height: 1.0; letter-spacing: -3px;
+    max-width: 860px;
+    animation: fadeUp 0.9s ease 0.1s both;
+    position: relative; z-index: 1;
+  }
+
+  .grad-text {
+    background: var(--grad);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 17px; color: var(--muted); max-width: 520px;
+    line-height: 1.75; margin-top: 24px; font-weight: 300;
+    animation: fadeUp 1s ease 0.2s both; position: relative; z-index: 1;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; margin-top: 40px;
+    animation: fadeUp 1s ease 0.3s both; position: relative; z-index: 1;
+  }
+
+  .btn-primary {
+    background: var(--grad); color: #fff;
+    padding: 14px 28px; border-radius: 10px;
+    font-size: 15px; font-weight: 500; text-decoration: none;
+    transition: all 0.25s; font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 6px 30px rgba(58,110,255,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(58,110,255,0.5); }
+
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    padding: 14px 28px; border-radius: 10px;
+    font-size: 15px; font-weight: 400; text-decoration: none;
+    border: 1px solid var(--border); transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-ghost:hover { border-color: rgba(79,195,247,0.3); background: rgba(79,195,247,0.05); }
+
+  /* ── DASHBOARD MOCKUP ── */
+  .hero-visual {
+    width: 100%; max-width: 980px; margin-top: 64px;
+    animation: fadeUp 1.2s ease 0.4s both; z-index: 1; position: relative;
+  }
+
+  .dashboard {
+    background: var(--bg2);
+    border: 1px solid rgba(79,195,247,0.12);
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.7),
+                0 0 0 1px rgba(255,255,255,0.04),
+                0 0 60px rgba(58,110,255,0.1);
+  }
+
+  .dash-topbar {
+    background: var(--bg3); padding: 13px 20px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background:#FF5F57; } .dot.y { background:#FFBD2E; } .dot.g { background:#28C840; }
+
+  .dash-url {
+    flex:1; background:rgba(255,255,255,0.04); border-radius:6px;
+    padding:4px 12px; font-size:11px; color:var(--muted);
+    margin-left:12px; font-family:monospace;
+  }
+
+  .dash-body { display:grid; grid-template-columns:190px 1fr; height:360px; }
+
+  .dash-sidebar {
+    background:var(--bg3); border-right:1px solid var(--border); padding:16px 0;
+  }
+
+  .sidebar-logo {
+    padding: 8px 16px 16px;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px;
+    border-bottom: 1px solid var(--border); margin-bottom: 8px;
+  }
+  .sidebar-logo span { background: var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+  .dash-nav-item {
+    padding:9px 16px; font-size:12px; color:var(--muted);
+    display:flex; align-items:center; gap:8px;
+    cursor:pointer; transition:all 0.2s;
+  }
+  .dash-nav-item.active {
+    color:var(--cyan); background:rgba(79,195,247,0.07);
+    border-right:2px solid var(--cyan);
+  }
+  .dash-nav-item .ni {
+    width:14px; height:14px; border-radius:3px;
+    background:currentColor; opacity:0.35; flex-shrink:0;
+  }
+
+  .dash-main { padding:18px; overflow:hidden; }
+
+  .dash-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+
+  .stat-card {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:10px; padding:13px;
+  }
+  .stat-label { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; }
+  .stat-value { font-size:20px; font-weight:700; font-family:'Syne',sans-serif; margin-top:4px; }
+  .stat-value.c { color:var(--cyan); }
+  .stat-value.b { color:var(--blue); }
+  .stat-value.i { color:#A78BFA; }
+  .stat-trend { font-size:9px; color:var(--cyan); margin-top:2px; opacity:0.8; }
+
+  .conversations { display:flex; flex-direction:column; gap:7px; }
+
+  .conv-item {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:8px; padding:9px 13px;
+    display:flex; align-items:center; gap:10px; font-size:11px;
+  }
+  .conv-avatar {
+    width:26px; height:26px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:9px; font-weight:700; flex-shrink:0;
+  }
+  .conv-avatar.wa { background:rgba(79,195,247,0.12); color:var(--cyan); }
+  .conv-avatar.ig { background:rgba(58,110,255,0.12); color:var(--blue); }
+  .conv-avatar.em { background:rgba(91,75,217,0.12); color:#A78BFA; }
+
+  .conv-info { flex:1; }
+  .conv-name { color:var(--text); font-weight:500; margin-bottom:2px; }
+  .conv-msg { color:var(--muted); }
+
+  .conv-badge {
+    padding:2px 8px; border-radius:100px; font-size:9px; font-weight:500;
+  }
+  .conv-badge.new  { background:rgba(79,195,247,0.1); color:var(--cyan); }
+  .conv-badge.ai   { background:rgba(91,75,217,0.12); color:#A78BFA; }
+  .conv-badge.open { background:rgba(58,110,255,0.1); color:var(--blue); }
+
+  /* ── LOGOS STRIP ── */
+  .logos-section {
+    padding: 44px 60px; position:relative; z-index:1;
+    border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  }
+  .logos-label {
+    text-align:center; font-size:11px; color:var(--muted);
+    text-transform:uppercase; letter-spacing:2.5px; margin-bottom:26px;
+  }
+  .logos-strip {
+    display:flex; align-items:center; justify-content:center;
+    gap:56px; flex-wrap:wrap;
+  }
+  .client-logo {
+    font-family:'Syne',sans-serif; font-weight:700; font-size:15px;
+    color:rgba(255,255,255,0.18); letter-spacing:-0.3px; transition:color 0.3s;
+  }
+  .client-logo:hover { color:rgba(255,255,255,0.6); }
+  .client-logo.featured {
+    background:var(--grad); -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent; background-clip:text;
+    opacity:0.7; transition:opacity 0.3s;
+  }
+  .client-logo.featured:hover { opacity:1; }
+
+  /* ── SECTIONS ── */
+  section { padding:96px 60px; position:relative; z-index:1; }
+
+  .section-label {
+    font-size:10px; text-transform:uppercase; letter-spacing:3px;
+    color:var(--cyan); margin-bottom:14px; font-weight:500;
+  }
+  .section-title {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(30px,3.8vw,50px);
+    font-weight:800; letter-spacing:-2px; line-height:1.05; max-width:580px;
+  }
+  .section-desc {
+    font-size:16px; color:var(--muted); max-width:480px;
+    line-height:1.75; margin-top:14px; font-weight:300;
+  }
+
+  /* ── FEATURES ── */
+  .features-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:48px; align-items:center;
+    max-width:1080px; margin:0 auto;
+  }
+  .features-cards { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+  .feat-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:16px; padding:22px; transition:all 0.3s;
+    position:relative; overflow:hidden;
+  }
+  .feat-card::before {
+    content:''; position:absolute; inset:0;
+    background:var(--grad-soft); opacity:0; transition:opacity 0.3s;
+  }
+  .feat-card:hover { border-color:rgba(79,195,247,0.25); transform:translateY(-2px); }
+  .feat-card:hover::before { opacity:1; }
+
+  .feat-icon {
+    width:38px; height:38px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:17px; margin-bottom:12px;
+    background:var(--grad-soft);
+  }
+  .feat-title {
+    font-family:'Syne',sans-serif; font-size:14px; font-weight:700;
+    margin-bottom:7px; letter-spacing:-0.2px;
+  }
+  .feat-desc { font-size:12px; color:var(--muted); line-height:1.65; }
+
+  /* ── CANALES ── */
+  .channels { display:flex; gap:10px; flex-wrap:wrap; margin-top:26px; }
+  .channel-pill {
+    display:flex; align-items:center; gap:6px;
+    background:var(--card); border:1px solid var(--border);
+    border-radius:100px; padding:5px 14px;
+    font-size:12px; color:var(--muted); transition:border-color 0.2s;
+  }
+  .channel-pill:hover { border-color:rgba(79,195,247,0.25); color:var(--text); }
+  .channel-dot { width:6px; height:6px; border-radius:50%; }
+
+  /* ── CASOS ── */
+  .casos-grid {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:22px; max-width:1080px; margin:56px auto 0;
+  }
+  .caso-card {
+    background:var(--bg2); border:1px solid var(--border);
+    border-radius:20px; padding:34px 26px; transition:all 0.3s;
+    position:relative; overflow:hidden;
+  }
+  .caso-card::after {
+    content:''; position:absolute; bottom:0; left:0; right:0;
+    height:2px; background:var(--grad);
+    transform:scaleX(0); transition:transform 0.35s;
+  }
+  .caso-card:hover { transform:translateY(-4px); border-color:rgba(79,195,247,0.2); }
+  .caso-card:hover::after { transform:scaleX(1); }
+
+  .caso-tag {
+    display:inline-block; padding:4px 12px; border-radius:100px;
+    font-size:10px; font-weight:500; margin-bottom:18px;
+    text-transform:uppercase; letter-spacing:0.8px;
+  }
+  .caso-tag.active { background:rgba(79,195,247,0.1); color:var(--cyan); }
+  .caso-tag.soon   { background:rgba(91,75,217,0.1);  color:#A78BFA; }
+  .caso-tag.open   { background:rgba(58,110,255,0.1); color:var(--blue); }
+
+  .caso-title {
+    font-family:'Syne',sans-serif; font-size:22px; font-weight:800;
+    letter-spacing:-0.5px; margin-bottom:12px;
+  }
+  .caso-desc { font-size:13px; color:var(--muted); line-height:1.7; }
+
+  .caso-stat {
+    margin-top:22px; padding-top:22px; border-top:1px solid var(--border);
+    display:flex; align-items:baseline; gap:8px;
+  }
+  .caso-stat-num {
+    font-family:'Syne',sans-serif; font-size:26px; font-weight:800;
+    background:var(--grad); -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .caso-stat-label { font-size:11px; color:var(--muted); line-height:1.5; }
+
+  /* ── STEPS ── */
+  .how-section { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+
+  .steps {
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:28px; max-width:1080px; margin:56px auto 0; position:relative;
+  }
+  .steps::before {
+    content:''; position:absolute;
+    top:27px; left:12%; right:12%; height:1px;
+    background:linear-gradient(90deg, transparent, var(--cyan), var(--indigo), transparent);
+    opacity:0.2;
+  }
+  .step { text-align:center; position:relative; }
+  .step-num {
+    width:54px; height:54px; border-radius:50%;
+    background:var(--bg3); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Syne',sans-serif; font-weight:800; font-size:17px;
+    margin:0 auto 18px; position:relative; z-index:1;
+    background:var(--grad-soft);
+  }
+  .step-num span { background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .step-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:8px; letter-spacing:-0.2px; }
+  .step-desc { font-size:13px; color:var(--muted); line-height:1.65; }
+
+  /* ── TESTIMONIOS ── */
+  .testimonios-grid {
+    display:grid; grid-template-columns:repeat(2,1fr);
+    gap:18px; max-width:860px; margin:56px auto 0;
+  }
+  .test-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:16px; padding:26px; transition:border-color 0.3s;
+  }
+  .test-card:hover { border-color:rgba(79,195,247,0.2); }
+  .test-quote {
+    font-size:14px; line-height:1.75; color:var(--text);
+    font-style:italic; margin-bottom:18px; font-weight:300;
+  }
+  .test-author { display:flex; align-items:center; gap:12px; }
+  .test-avatar {
+    width:36px; height:36px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:700;
+    background:var(--grad-soft);
+    border:1px solid rgba(79,195,247,0.2);
+  }
+  .test-avatar span { background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .test-name { font-size:13px; font-weight:500; }
+  .test-role { font-size:11px; color:var(--muted); }
+
+  /* ── CTA FINAL ── */
+  .cta-section {
+    text-align:center; padding:120px 60px;
+    position:relative; overflow:hidden;
+  }
+  .cta-section::before {
+    content:''; position:absolute;
+    width:700px; height:500px;
+    background:radial-gradient(ellipse, rgba(58,110,255,0.12) 0%, transparent 70%);
+    bottom:-150px; left:50%; transform:translateX(-50%);
+    pointer-events:none;
+  }
+  .cta-section::after {
+    content:''; position:absolute;
+    width:400px; height:400px;
+    background:radial-gradient(circle, rgba(79,195,247,0.07) 0%, transparent 70%);
+    top:-50px; right:-50px; pointer-events:none;
+  }
+
+  .cta-section h2 {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(34px,4.5vw,60px);
+    font-weight:800; letter-spacing:-2px; line-height:1.0;
+    max-width:660px; margin:0 auto 22px;
+    position:relative; z-index:1;
+  }
+  .cta-section p {
+    color:var(--muted); font-size:16px; max-width:400px;
+    margin:0 auto 36px; line-height:1.75;
+    position:relative; z-index:1;
+  }
+  .cta-actions {
+    display:flex; gap:14px; justify-content:center;
+    position:relative; z-index:1;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top:1px solid var(--border); padding:36px 60px;
+    display:flex; align-items:center; justify-content:space-between;
+    position:relative; z-index:1;
+  }
+  .footer-brand { display:flex; flex-direction:column; gap:2px; }
+  .footer-logo {
+    font-family:'Syne',sans-serif; font-weight:800; font-size:17px; letter-spacing:-0.3px;
+  }
+  .footer-logo span { background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .footer-tagline { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:2px; }
+  .footer-copy { font-size:12px; color:var(--muted); }
+  .footer-links { display:flex; gap:22px; }
+  .footer-links a {
+    font-size:12px; color:var(--muted);
+    text-decoration:none; transition:color 0.2s;
+  }
+  .footer-links a:hover { color:var(--text); }
+
+  /* ── UTILITY ── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(22px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .center { text-align:center; }
+  .center .section-title, .center .section-desc { margin-left:auto; margin-right:auto; }
+
+  /* Gradient border card */
+  .grad-border {
+    position:relative; border-radius:16px; padding:1px;
+    background:linear-gradient(135deg, rgba(79,195,247,0.3), rgba(91,75,217,0.3));
+  }
+  .grad-border-inner {
+    background:var(--bg2); border-radius:15px; padding:28px;
+  }
+</style>
+</head>
+<body>
+
+<div class="glow-top"></div>
+<div class="glow-left"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="logo">
+    <div class="logo-mark">🤖</div>
+    <div>
+      <div class="logo-text"><span class="grad-text">ChatIvot</span></div>
+      <div class="logo-sub">AI Agent Chat</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Producto</a></li>
+    <li><a href="#">Casos de uso</a></li>
+    <li><a href="#">Recursos</a></li>
+    <li><a href="#">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/3197010283018?text=Hola,%20quiero%20solicitar%20una%20licencia%20de%20Chativot" class="nav-cta">Solicita tu licencia →</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-badge">
+    <div class="dot-pulse"></div>
+    AI Agent Chat · Latinoamérica
+  </div>
+
+  <h1>
+    El agente de IA que<br>
+    convierte cada mensaje<br>en <span class="grad-text">una venta.</span>
+  </h1>
+
+  <p class="hero-sub">
+    ChatIvot centraliza WhatsApp, Instagram y más canales en un solo CRM inteligente. Tu equipo atiende más rápido. Tu IA vende las 24 horas.
+  </p>
+
+  <div class="hero-actions">
+    <a href="https://wa.me/3197010283018?text=Hola,%20quiero%20solicitar%20una%20licencia%20white-label%20de%20Chativot" class="btn-primary">Solicitar licencia white-label</a>
+    <a href="mailto:admin@chativot.com?subject=Solicitud%20de%20demostración%20Chativot" class="btn-ghost">Ver demostración →</a>
+  </div>
+
+  <!-- Dashboard Mockup -->
+  <div class="hero-visual">
+    <div class="dashboard">
+      <div class="dash-topbar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="dash-url">app.chativot.com/inbox</div>
+      </div>
+      <div class="dash-body">
+        <div class="dash-sidebar">
+          <div class="sidebar-logo"><span>ChatIvot</span></div>
+          <div class="dash-nav-item active"><div class="ni"></div> Inbox</div>
+          <div class="dash-nav-item"><div class="ni"></div> Contactos</div>
+          <div class="dash-nav-item"><div class="ni"></div> Automatizaciones</div>
+          <div class="dash-nav-item"><div class="ni"></div> Agente IA</div>
+          <div class="dash-nav-item"><div class="ni"></div> Reportes</div>
+          <div class="dash-nav-item"><div class="ni"></div> Configuración</div>
+        </div>
+        <div class="dash-main">
+          <div class="dash-stats">
+            <div class="stat-card">
+              <div class="stat-label">Conversaciones hoy</div>
+              <div class="stat-value c">247</div>
+              <div class="stat-trend">↑ 18% vs ayer</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Resueltas por IA</div>
+              <div class="stat-value b">83%</div>
+              <div class="stat-trend">↑ automatizadas</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Tiempo resp. prom.</div>
+              <div class="stat-value i">1.2m</div>
+              <div class="stat-trend">↓ 40% reducción</div>
+            </div>
+          </div>
+          <div class="conversations">
+            <div class="conv-item">
+              <div class="conv-avatar wa">WA</div>
+              <div class="conv-info">
+                <div class="conv-name">María González</div>
+                <div class="conv-msg">¿Cuál es el precio del plan empresarial?</div>
+              </div>
+              <span class="conv-badge new">Nuevo</span>
+            </div>
+            <div class="conv-item">
+              <div class="conv-avatar ig">IG</div>
+              <div class="conv-info">
+                <div class="conv-name">Carlos Medina</div>
+                <div class="conv-msg">Quiero agendar una demo del sistema</div>
+              </div>
+              <span class="conv-badge ai">IA activa</span>
+            </div>
+            <div class="conv-item">
+              <div class="conv-avatar em">TW</div>
+              <div class="conv-info">
+                <div class="conv-name">TuentradaWeb</div>
+                <div class="conv-msg">Confirmación de pago recibida ✓</div>
+              </div>
+              <span class="conv-badge open">Procesado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LOGOS ── -->
+<div class="logos-section">
+  <p class="logos-label">Empresas que ya confían en ChatIvot</p>
+  <div class="logos-strip">
+    <span class="client-logo featured">TuentradaWeb</span>
+    <span class="client-logo featured">Ivo Talents</span>
+    <span class="client-logo">Tu empresa</span>
+    <span class="client-logo">Tu empresa</span>
+    <span class="client-logo">Tu empresa</span>
+  </div>
+</div>
+
+<!-- ── FEATURES ── -->
+<section>
+  <div class="features-grid">
+    <div>
+      <p class="section-label">Plataforma</p>
+      <h2 class="section-title">Más que un CRM. El sistema nervioso de tu comunicación.</h2>
+      <p class="section-desc">Una plataforma completa con inteligencia artificial que conecta todos tus canales, automatiza tu operación y escala junto a tu empresa.</p>
+      <div class="channels">
+        <div class="channel-pill"><div class="channel-dot" style="background:#25D366"></div> WhatsApp</div>
+        <div class="channel-pill"><div class="channel-dot" style="background:#E1306C"></div> Instagram</div>
+        <div class="channel-pill"><div class="channel-dot" style="background:#4FC3F7"></div> Email</div>
+        <div class="channel-pill"><div class="channel-dot" style="background:#A78BFA"></div> + Más canales</div>
+      </div>
+    </div>
+    <div class="features-cards">
+      <div class="feat-card">
+        <div class="feat-icon">🤖</div>
+        <div class="feat-title">Agente IA de Ventas</div>
+        <div class="feat-desc">GPT-4o atiende, califica y convierte leads automáticamente, las 24 horas del día.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📊</div>
+        <div class="feat-title">CRM Inteligente</div>
+        <div class="feat-desc">Historial completo por cliente, etiquetas inteligentes y seguimiento en tiempo real.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⚡</div>
+        <div class="feat-title">Automatizaciones</div>
+        <div class="feat-desc">Flujos n8n conectan tu CRM con pagos, inventario y cualquier sistema existente.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🏷️</div>
+        <div class="feat-title">White-Label 100%</div>
+        <div class="feat-desc">Tu marca, tu dominio, tu plataforma. Lista para lanzar en días, no en meses.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CASOS DE USO ── -->
+<section style="background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="center">
+    <p class="section-label">Casos de uso</p>
+    <h2 class="section-title">Clientes reales. Resultados reales.</h2>
+    <p class="section-desc">ChatIvot ya opera en producción con empresas líderes de la región.</p>
+  </div>
+  <div class="casos-grid">
+    <div class="caso-card">
+      <span class="caso-tag active">● Cliente activo</span>
+      <div class="caso-title">TuentradaWeb</div>
+      <div class="caso-desc">La plataforma de ticketing líder en Venezuela automatizó la confirmación de pagos y atención al comprador vía WhatsApp Business API con reconocimiento OCR de recibos Zelle y Binance.</div>
+      <div class="caso-stat">
+        <div class="caso-stat-num">-70%</div>
+        <div class="caso-stat-label">reducción en tiempo de verificación de pagos</div>
+      </div>
+    </div>
+    <div class="caso-card">
+      <span class="caso-tag soon">◐ Próximamente</span>
+      <div class="caso-title">Ivo Talents</div>
+      <div class="caso-desc">La plataforma de casting online conectará talentos, productoras y clientes bajo el nombre ChatIvo, centralizando toda su comunicación y automatizando su proceso de curaduría.</div>
+      <div class="caso-stat">
+        <div class="caso-stat-num">747+</div>
+        <div class="caso-stat-label">talentos gestionados desde un solo inbox</div>
+      </div>
+    </div>
+    <div class="caso-card">
+      <span class="caso-tag open">○ Tu industria</span>
+      <div class="caso-title">¿Tu empresa?</div>
+      <div class="caso-desc">E-commerce, fintech, salud, educación, inmobiliarias — si tu empresa maneja volumen de mensajes y necesita orden, automatización e inteligencia, ChatIvot es para ti.</div>
+      <div class="caso-stat">
+        <div class="caso-stat-num">14 días</div>
+        <div class="caso-stat-label">tiempo promedio de implementación</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STEPS ── -->
+<section class="how-section">
+  <div class="center">
+    <p class="section-label">Proceso</p>
+    <h2 class="section-title">De cero a producción en 4 pasos</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num"><span>01</span></div>
+      <div class="step-title">Diagnóstico</div>
+      <div class="step-desc">Analizamos tus canales, volumen de mensajes y necesidades reales del negocio.</div>
+    </div>
+    <div class="step">
+      <div class="step-num"><span>02</span></div>
+      <div class="step-title">Configuración</div>
+      <div class="step-desc">Instalamos y personalizamos ChatIvot con tu marca, flujos y reglas de negocio.</div>
+    </div>
+    <div class="step">
+      <div class="step-num"><span>03</span></div>
+      <div class="step-title">Integración</div>
+      <div class="step-desc">Conectamos tus canales, CRM y sistemas de pago en un flujo unificado.</div>
+    </div>
+    <div class="step">
+      <div class="step-num"><span>04</span></div>
+      <div class="step-title">En vivo</div>
+      <div class="step-desc">Tu equipo opera desde un inbox. Tu agente IA trabaja 24/7 para cerrar ventas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIOS ── -->
+<section class="center">
+  <p class="section-label">Testimonios</p>
+  <h2 class="section-title">Lo que dicen quienes ya usan ChatIvot</h2>
+  <div class="testimonios-grid">
+    <div class="test-card">
+      <p class="test-quote">"ChatIvot transformó completamente cómo gestionamos la confirmación de pagos. Lo que antes tomaba horas, ahora es automático e instantáneo."</p>
+      <div class="test-author">
+        <div class="test-avatar"><span>TW</span></div>
+        <div>
+          <div class="test-name">Equipo TuentradaWeb</div>
+          <div class="test-role">Plataforma de ticketing · Venezuela</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <p class="test-quote">"La arquitectura white-label nos permite entregar una experiencia profesional sin construir tecnología desde cero. Un diferenciador real en el mercado."</p>
+      <div class="test-author">
+        <div class="test-avatar"><span>AI</span></div>
+        <div>
+          <div class="test-name">Andreina Marrón</div>
+          <div class="test-role">CEO & Fundadora · ACM Four Company S.A.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA FINAL ── -->
+<section class="cta-section">
+  <h2>¿Listo para escalar tu <span class="grad-text">comunicación</span>?</h2>
+  <p>Únete a las empresas que ya crecen con ChatIvot en Latinoamérica. Licencias disponibles ahora.</p>
+  <div class="cta-actions">
+    <a href="https://wa.me/3197010283018?text=Hola,%20quiero%20solicitar%20una%20licencia%20white-label%20de%20Chativot" class="btn-primary">Solicitar licencia white-label</a>
+    <a href="mailto:admin@chativot.com?subject=Solicitud%20de%20demo%20gratuita%20Chativot" class="btn-ghost">Agendar demo gratuita</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">
+    <div class="footer-logo"><span>ChatIvot</span></div>
+    <div class="footer-tagline">AI Agent Chat</div>
+  </div>
+  <div class="footer-copy">© 2025 ACM Four Company S.A. · Ciudad de Panamá</div>
+  <div class="footer-links">
+    <a href="#">Privacidad</a>
+    <a href="#">Términos</a>
+    <a href="#">Contacto</a>
+  </div>
+</footer>
+
+</body>
+</html>
