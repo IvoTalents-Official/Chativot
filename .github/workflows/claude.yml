@@ -16,6 +16,11 @@ jobs:
       id-token: write
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: Claude Code Action
         uses: anthropics/claude-code-action@v1
         with:
@@ -28,13 +33,12 @@ jobs:
             ## Stack técnico
             - Chatwoot + n8n + PostgreSQL
             - Docker en AWS Lightsail (PROD) y Hetzner CX33 (DEV)
-            - DNS gestionado en Cloudflare (cuenta digitalizacion@ivotalents.com)
+            - DNS gestionado en Cloudflare
             - Ubuntu 24.04, UFW activo en DEV
 
             ## Integración WhatsApp
             - Todos los clientes Chativot: WhatsApp Business API oficial
             - Excepción: ChatIvo (Ivo Talents) usa conexión por QR con fzap + WPPConnect
-            - No confundir ambas modalidades en el código
 
             ## Al revisar cada PR, reporta en español:
             1. Bugs o errores lógicos
