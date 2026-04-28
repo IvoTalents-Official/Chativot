@@ -1,0 +1,48 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  issue_comment:
+    types: [created]
+
+jobs:
+  claude-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Claude Code Action
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          trigger_phrase: "@claude"
+          prompt: |
+            Eres un revisor de código experto para Chativot, un CRM 
+            conversacional SaaS white-label desarrollado por ACM Four Company S.A.
+
+            ## Stack técnico
+            - Chatwoot + n8n + PostgreSQL
+            - Docker en AWS Lightsail (PROD) y Hetzner CX33 (DEV)
+            - DNS gestionado en Cloudflare
+            - Ubuntu 24.04, UFW activo en DEV
+
+            ## Integración WhatsApp
+            - Todos los clientes Chativot: WhatsApp Business API oficial
+            - Excepción: ChatIvo (Ivo Talents) usa conexión por QR con fzap + WPPConnect
+
+            ## Al revisar cada PR, reporta en español:
+            1. Bugs o errores lógicos
+            2. Problemas de seguridad en webhooks y variables de entorno
+            3. Malas prácticas
+            4. Impacto en PROD vs DEV
+            5. Mejoras sugeridas con ejemplos de código
